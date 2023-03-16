@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "953085787397",
+    "project_id": "elmejorpecio",
+    "storage_bucket": "elmejorpecio.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:953085787397:android:e5b932d8d0068120aa4b6c",
+        "android_client_info": {
+          "package_name": "com.example.elmejorprecio"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "953085787397-ofloa77uce3htm2tbubaltc5r7umtsnk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCwI95jdl30POQc33HMZBy_CkIiYcjzGmo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "953085787397-ofloa77uce3htm2tbubaltc5r7umtsnk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
