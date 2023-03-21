@@ -12,7 +12,7 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:targetApi="31">
         <activity
-            android:name=".loggin"
+            android:name="com.examp0le.elmejorprecio.loggin"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
