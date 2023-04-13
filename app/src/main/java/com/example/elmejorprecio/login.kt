@@ -17,6 +17,7 @@ import com.google.firebase.auth.GoogleAuthProvider
 
 class login : AppCompatActivity(){
     private val GOOGLE_SING_IN =100
+    var emailUsuario=""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityLoginBinding.inflate(layoutInflater)
@@ -31,6 +32,8 @@ class login : AppCompatActivity(){
                 ).addOnCompleteListener {
                     if (it.isSuccessful) {
                         val intent = Intent(this, principal::class.java)
+                        emailUsuario=binding.edtEmail.text.toString()
+                        intent.putExtra("emailUsuario",emailUsuario)
                         startActivity(intent)
                     } else {
                         Toast.makeText(this, "Error al autentificar el usuario", Toast.LENGTH_SHORT).show()
@@ -41,12 +44,37 @@ class login : AppCompatActivity(){
             }
         }
 
+
+        //Recuperacion de contraseña
+        binding.textViewOlvide.setOnClickListener(){
+            val auth = FirebaseAuth.getInstance()
+
+            val userEmail=binding.edtEmail.text.toString()
+            if (binding.edtEmail.text.toString().isNotEmpty()) {
+                auth.sendPasswordResetEmail(userEmail).addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Toast.makeText(this, "Se ha enviado el correo electrónico de recuperación de contraseña", Toast.LENGTH_SHORT).show()
+
+                    } else {
+                        Toast.makeText(
+                            this,
+                            "Ha ocurrido un error al enviar el correo electrónico de recuperación de contraseña",
+                            Toast.LENGTH_SHORT
+                        ).show()
+
+                    }
+                }
+            }else{
+                Toast.makeText(this, "Rellena el email para poder mandarte el email", Toast.LENGTH_SHORT).show()
+            }
+        }
         //Boton Google
         binding.imgButtonGoogle.setOnClickListener(){
             val googleConf=GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken(getString(
                 R.string.default_web_client_id)).requestEmail().build()
             val googleClient=GoogleSignIn.getClient(this,googleConf)
             googleClient.signOut()
+
             startActivityForResult(googleClient.signInIntent,GOOGLE_SING_IN)
         }
 
@@ -72,6 +100,8 @@ class login : AppCompatActivity(){
                         .addOnCompleteListener {
                             if (it.isSuccessful) {
                                 val intent = Intent(this, principal::class.java)
+                                emailUsuario= account.email.toString()
+                                intent.putExtra("emailUsuario",emailUsuario)
                                 startActivity(intent)
                             } else {
                                 Toast.makeText(this, "Error al autentificar el usuario", Toast.LENGTH_SHORT).show()
