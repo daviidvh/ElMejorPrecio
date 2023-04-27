@@ -1,4 +1,4 @@
-package com.examp0le.elmejorprecio
+package com.example.elmejorprecio
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -6,14 +6,13 @@ import android.os.Bundle
 import android.widget.Toast
 import com.example.elmejorprecio.R
 import com.example.elmejorprecio.databinding.ActivityLoginBinding
-import com.example.elmejorprecio.principal
 import com.example.elmejorprecio.registro
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.api.Api
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.example.elmejorprecio.muestraProductos
 
 class login : AppCompatActivity(){
     private val GOOGLE_SING_IN =100
@@ -23,7 +22,6 @@ class login : AppCompatActivity(){
         val binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
         binding.btnIniciar.setOnClickListener() {
             if (binding.edtEmail.text.isNotEmpty() && binding.edtPassword.text.isNotEmpty()) {
                 FirebaseAuth.getInstance().signInWithEmailAndPassword(
@@ -31,7 +29,7 @@ class login : AppCompatActivity(){
                     binding.edtPassword.text.toString()
                 ).addOnCompleteListener {
                     if (it.isSuccessful) {
-                        val intent = Intent(this, principal::class.java)
+                        val intent = Intent(this, muestraProductos::class.java)
                         emailUsuario=binding.edtEmail.text.toString()
                         intent.putExtra("emailUsuario",emailUsuario)
                         startActivity(intent)
@@ -95,11 +93,10 @@ class login : AppCompatActivity(){
 
                 if (account != null) {
                     val credential = GoogleAuthProvider.getCredential(account.idToken, null)
-
                     FirebaseAuth.getInstance().signInWithCredential(credential)
                         .addOnCompleteListener {
                             if (it.isSuccessful) {
-                                val intent = Intent(this, principal::class.java)
+                                val intent = Intent(this, muestraProductos::class.java)
                                 emailUsuario= account.email.toString()
                                 intent.putExtra("emailUsuario",emailUsuario)
                                 startActivity(intent)

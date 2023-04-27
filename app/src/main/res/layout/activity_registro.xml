@@ -31,10 +31,9 @@
 
     <EditText
         android:id="@+id/edtPasswordRegistro"
-        android:layout_width="240dp"
-        android:layout_height="37dp"
+        android:layout_width="234dp"
+        android:layout_height="41dp"
         android:layout_marginBottom="372dp"
-        android:background="@drawable/edtredondos"
         android:ems="10"
         android:hint="Contaseña"
         android:inputType="textPersonName|textPassword"
@@ -50,9 +49,8 @@
 
     <EditText
         android:id="@+id/edtEmailRegistro"
-        android:layout_width="240dp"
-        android:layout_height="37dp"
-        android:background="@drawable/edtredondos"
+        android:layout_width="234dp"
+        android:layout_height="41dp"
         android:ems="10"
         android:hint="Email"
         android:inputType="textPersonName"

@@ -36,22 +36,24 @@ class agregarProductos : AppCompatActivity() {
                 // Creamos una referencia en Firebase Storage con el nombre de la imagen
                 val storageRef = FirebaseStorage.getInstance().reference.child("images/${imagenUri?.lastPathSegment}")
                 // Subimos la imagen a Firebase Storage y obtenemos su URL de descarga
+                Toast.makeText(this, "Subiendo producto...", Toast.LENGTH_SHORT).show()
                 storageRef.putFile(imagenUri!!).continueWithTask { task ->
-                        if (!task.isSuccessful) {task.exception?.let {
+                    if (!task.isSuccessful) {task.exception?.let {
                                 throw it
                             }
                         }
                         storageRef.downloadUrl
                     }.addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
+                    if (task.isSuccessful) {
                             imagenUrl = task.result.toString()
                             // Una vez se ha subido la imagen, creamos los datos del usuario y del producto
                             val datos = creaciondb()
                             datos.crearDatosUsuario(emailUsuario.toString())
                             datos.crearDatosProductos(emailUsuario.toString(), binding.txtNombre.text.toString(), binding.txtPrecio.text.toString().toDouble(), binding.txtDescripcion.text.toString(), binding.txtSupermercado.text.toString(), imagenUrl!!)
-                            val intent = Intent(this, principal::class.java)
+                        val intent = Intent(this, muestraProductos::class.java)
                             Toast.makeText(this, "Producto añadido correctamente", Toast.LENGTH_SHORT).show()
-                            startActivity(intent)
+                        intent.putExtra("emailUsuario",emailUsuario)
+                        startActivity(intent)
                         } else {
                             Toast.makeText(this, "Error al subir la imagen: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
                         }

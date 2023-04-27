@@ -16,7 +16,7 @@
             android:name=".agregarProductos"
             android:exported="false" />
         <activity
-            android:name=".principal"
+            android:name=".muestraProductos"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
@@ -24,7 +24,7 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.examp0le.elmejorprecio.login"
+            android:name="com.example.elmejorprecio.login"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>

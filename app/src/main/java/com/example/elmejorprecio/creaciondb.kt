@@ -25,7 +25,6 @@ class creaciondb {
             "imagenUrl" to imagenUrl,
             "fechaCreacion" to FieldValue.serverTimestamp()
         )
-
         db.collection("usuarios").document(email).collection("productos").add(producto)
     }
 }
