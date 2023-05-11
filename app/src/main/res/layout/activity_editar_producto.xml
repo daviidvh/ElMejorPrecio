@@ -2,10 +2,10 @@
 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/swipeRefresh"
+    android:id="@+id/swipeRefresh2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".muestraProductos">
+    tools:context=".editarProducto">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -36,7 +36,7 @@
                 android:id="@+id/editar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Editar"
+                android:text="Inicio"
                 android:textSize="16sp"
                 android:textStyle="bold"/>
 
@@ -44,31 +44,14 @@
 
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="376dp"
-            android:layout_height="699dp"
+            android:id="@+id/recyclerView2"
+            android:layout_width="362dp"
+            android:layout_height="644dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.457"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/agregar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:contentDescription="agreagar producto"
-            android:src="@drawable/agregar"
-            app:backgroundTint="#E7C182"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.94"
-            tools:ignore="MissingConstraints" />
-
+            app:layout_constraintVertical_bias="1.0" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

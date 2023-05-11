@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
@@ -13,8 +14,13 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:targetApi="31">
         <activity
+            android:name=".editarProducto"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+        <activity
             android:name=".agregarProductos"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".muestraProductos"
             android:exported="false"
@@ -24,7 +30,7 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.example.elmejorprecio.login"
+            android:name=".login"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>

@@ -1,21 +1,21 @@
 package com.example.elmejorprecio
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import java.text.SimpleDateFormat
 import java.util.Locale
+// ...importaciones de bibliotecas...
 
-class MiAdaptador(private val context: Context, private val listaProductos: List<Producto>) :
-    RecyclerView.Adapter<MiAdaptador.ViewHolder>() {
+class AdaptadorEditarEliminar(private val context: Context, private val listaProductos: List<Producto>) :
+    RecyclerView.Adapter<AdaptadorEditarEliminar.ViewHolder>() {
 
-    // Clase ViewHolder que se encarga de mantener las referencias de los elementos de la vista
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val imageView: ImageView = view.findViewById(R.id.image_view)
         val nameTextView: TextView = view.findViewById(R.id.txt_nombre)
@@ -23,45 +23,46 @@ class MiAdaptador(private val context: Context, private val listaProductos: List
         val descriptionTextView: TextView = view.findViewById(R.id.txt_descripcion)
         val supermarketTextView: TextView = view.findViewById(R.id.txt_supermercado)
         val userTextView: TextView = view.findViewById(R.id.txt_Usuario)
-        val fechaCreacion: TextView =view.findViewById(R.id.fechaCreacion)
+        val fechaCreacion: TextView = view.findViewById(R.id.fechaCreacion)
+        val btnEliminar: ImageView = view.findViewById(R.id.eliminar_button)
+        val btnEditar: ImageView = view.findViewById(R.id.editar_button)
     }
 
-    // Este método se llama cuando se crea el ViewHolder
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        // Inflar la vista del elemento de la lista usando el layout lista_productos
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.lista_productos, parent, false)
-        // Crear y retornar el ViewHolder
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.edicion_productos, parent, false)
         return ViewHolder(view)
     }
 
-    // Este método se llama cuando se debe actualizar el contenido del ViewHolder con el elemento en la posición dada
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        // Obtener el producto en la posición dada
         val product = listaProductos[position]
-        // Establecer el nombre del producto en el TextView correspondiente
         holder.nameTextView.text = product.nombreProducto
-        // Establecer el precio del producto en el TextView correspondiente
         holder.priceTextView.text = "${product.precioProducto}€"
-        // Establecer la descripción del producto en el TextView correspondiente
         holder.descriptionTextView.text = product.descripcionProducto
-        // Establecer el supermercado del producto en el TextView correspondiente
         holder.supermarketTextView.text = product.supermercado
-        // Establecer el usuario que publicó el producto en el TextView correspondiente
         holder.userTextView.text = product.usuario
-        // Formato de fecha que deseas mostrar
         val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         holder.fechaCreacion.text = dateFormat.format(product.fechaCreacion?.toDate())
-        // Cargar la imagen del producto en el ImageView usando Glide
+
+        holder.btnEliminar.setOnClickListener {
+            // Acción al hacer clic en el botón de eliminar
+        }
+
+        holder.btnEditar.setOnClickListener {
+            // Acción al hacer clic en el botón de editar
+        }
+
+        // Establecer las imágenes de los botones eliminar y editar
+        holder.btnEliminar.setImageResource(R.drawable.eliminar)
+        holder.btnEditar.setImageResource(R.drawable.editar)
+
+        // Establecer la imagen del producto
         Glide.with(context)
             .load(product.imagenProducto)
-            .placeholder(R.drawable.noimagen) // Establecer la imagen por defecto mientras se carga la imagen del producto
+            .placeholder(R.drawable.noimagen)
             .into(holder.imageView)
+
+        Log.d("RecyclerView", "Se actualizó el ViewHolder para RecyclerView: ${holder.itemView.parent.toString()}")
     }
 
-    // Este método retorna la cantidad de elementos en la lista
     override fun getItemCount(): Int = listaProductos.size
-
-
-
 }
-

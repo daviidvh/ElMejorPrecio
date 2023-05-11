@@ -50,7 +50,7 @@ class agregarProductos : AppCompatActivity() {
                             val datos = creaciondb()
                             datos.crearDatosUsuario(emailUsuario.toString())
                             datos.crearDatosProductos(emailUsuario.toString(), binding.txtNombre.text.toString(), binding.txtPrecio.text.toString().toDouble(), binding.txtDescripcion.text.toString(), binding.txtSupermercado.text.toString(), imagenUrl!!)
-                        val intent = Intent(this, muestraProductos::class.java)
+                            val intent = Intent(this, muestraProductos::class.java)
                             Toast.makeText(this, "Producto añadido correctamente", Toast.LENGTH_SHORT).show()
                         intent.putExtra("emailUsuario",emailUsuario)
                         startActivity(intent)
