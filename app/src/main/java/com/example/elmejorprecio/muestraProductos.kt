@@ -14,7 +14,7 @@ import com.google.firebase.firestore.Query
 
 class muestraProductos : AppCompatActivity() {
     private lateinit var binding: ActivityPrincipalBinding
-    private var productList = mutableListOf<Producto>()
+    private var listaProductos = mutableListOf<Producto>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +33,7 @@ class muestraProductos : AppCompatActivity() {
         }
 
         binding.editar.setOnClickListener(){
-            val intent = Intent(this, editarProducto::class.java)
+            val intent = Intent(this, zonaUsuario::class.java)
             intent.putExtra("emailUsuario",emailUsuario)
             startActivity(intent)
         }
@@ -63,7 +63,7 @@ class muestraProductos : AppCompatActivity() {
             .orderBy(FieldPath.documentId(), Query.Direction.DESCENDING)
             .get()
             .addOnSuccessListener { result ->
-                productList.clear() // Limpia la lista de productos antes de cargar los nuevos
+                listaProductos.clear() // Limpia la lista de productos antes de cargar los nuevos
                 for (document in result) {
                     // Recupera los datos de cada documento y crea un objeto de productos
                     val nombreProducto = document.getString("nombre")
@@ -74,10 +74,12 @@ class muestraProductos : AppCompatActivity() {
                     //Tenemos dos fechas para tratar los nulos
                     val fechaCreacion = document.getTimestamp("fechaCreacion")
                     val fecha = fechaCreacion ?: Timestamp.now()
-                    val usuario =
-                        document.reference.parent.parent!!.id
-                    // Obtiene el email del usuario a partir de la ruta del documento
 
+                    // Obtiene el email del usuario a partir de la ruta del documento
+                    val usuario = document.reference.parent.parent!!.id
+
+                    val id=document.id
+                    //Creamos la instancia al Producta y tratamos los nulos
                     val product = Producto(
                         nombreProducto!!,
                         precioProducto!!.toDouble(),
@@ -85,13 +87,14 @@ class muestraProductos : AppCompatActivity() {
                         descripcionProducto!!,
                         supermercado!!,
                         usuario!!,
-                        fecha!!
+                        fecha!!,
+                        id!!
                     )
-                    productList.add(product)
+                    listaProductos.add(product)
                 }
 
                 // Crea un adaptador para el RecyclerView y usa la lista de productos
-                val adapter = MiAdaptador(this, productList)
+                val adapter = MiAdaptador(this, listaProductos)
                 binding.recyclerView.adapter = adapter
             }
     }

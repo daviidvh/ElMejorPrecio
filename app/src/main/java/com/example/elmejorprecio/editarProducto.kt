@@ -1,115 +1,66 @@
 package com.example.elmejorprecio
 
-import android.os.Bundle
-import android.util.Log
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.example.elmejorprecio.databinding.ActivityEditarProductoBinding
-import com.google.firebase.Timestamp
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.firestore.FieldPath
+import android.os.Bundle
+import android.widget.Toast
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
+import com.example.elmejorprecio.databinding.ActivityEditarProductoBinding
+import com.google.firebase.auth.FirebaseAuth
 
 class editarProducto : AppCompatActivity() {
+    private lateinit var binding: ActivityEditarProductoBinding
 
-    private lateinit var recyclerView2: RecyclerView
-    private lateinit var miAdaptador2: AdaptadorEditarEliminar
-    private lateinit var listaProductos: MutableList<Producto>
-    private lateinit var database: FirebaseFirestore
-    private lateinit var usuario: FirebaseUser
-    private lateinit var emailUsuario: String
-
+    @SuppressLint("SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityEditarProductoBinding.inflate(layoutInflater)
+        binding = ActivityEditarProductoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        emailUsuario = intent.getStringExtra("emailUsuario")!!
-        Log.d("EditarProductosActivity", "Email del usuario: $emailUsuario")
+        //Cogemos los datos del producto seleccionado
+        val productoId = intent.getStringExtra("productoId")
+        val nombreProducto = intent.getStringExtra("nombreProducto")
+        val precioProducto = intent.getDoubleExtra("precioProducto", 0.0)
+        val descripcionProducto = intent.getStringExtra("descripcionProducto")
+        val supermercado = intent.getStringExtra("supermercado")
+
+        // Establecer los valores en los campos correspondientes
+        binding.txtNombre.setText(nombreProducto)
+        binding.txtPrecio.setText(precioProducto.toString())
+        binding.txtDescripcion.setText(descripcionProducto)
+        binding.txtSupermercado.setText(supermercado)
+
+        // Implementar lógica para guardar los cambios
+        binding.btnActualizar.setOnClickListener {
+            //Pasamos a texto lo que hay escrito en los datos del producto
+            val nuevoNombre = binding.txtNombre.text.toString()
+            val nuevoPrecio = binding.txtPrecio.text.toString().toDouble()
+            val nuevaDescripcion = binding.txtDescripcion.text.toString()
+            val nuevoSupermercado = binding.txtSupermercado.text.toString()
+
+            // Actualizar los datos del producto en la base de datos
+            val db = FirebaseFirestore.getInstance()
+            //Cogemos el email de la sesion
+            val auth = FirebaseAuth.getInstance()
+            val currentUser = auth.currentUser
+            val emailUsuario = currentUser?.email
 
 
-        // Inicializar variables
-        recyclerView2 = findViewById(R.id.recyclerView2)
-        listaProductos = mutableListOf()
-        database = FirebaseFirestore.getInstance()
-        usuario = FirebaseAuth.getInstance().currentUser!!
-
-        // Configurar RecyclerView y adaptador
-        miAdaptador2 = AdaptadorEditarEliminar(this, listaProductos)
-        recyclerView2.layoutManager = LinearLayoutManager(this)
-        recyclerView2.adapter = miAdaptador2
-
-        // Obtener la lista de productos del usuario
-        obtenerProductosUsuario()
-
-
-
-
-        // Configura el SwipeRefreshLayout
-        val swipeRefreshLayout = findViewById<SwipeRefreshLayout>(R.id.swipeRefresh2)
-        swipeRefreshLayout.setOnRefreshListener {
-
-            // Vuelve a cargar los productos
-            obtenerProductosUsuario()
-
-            // Cuando termines de actualizar los datos, debes llamar a setRefreshing(false) para
-            // indicarle al SwipeRefreshLayout que deje de mostrar el indicador de progreso.
-            swipeRefreshLayout.isRefreshing = false
-        }
-    }
-
-    private fun obtenerProductosUsuario() {
-        // Obtén una instancia de la base de datos de Firestore
-        val db = FirebaseFirestore.getInstance()
-
-        // Accede a la subcolección de productos del usuario actual y ordénalos por fecha de manera descendente
-        db.collection("usuarios").document(emailUsuario).collection("productos")
-            .orderBy("fechaCreacion", Query.Direction.DESCENDING)
-            .orderBy("precio", Query.Direction.DESCENDING)
-            .orderBy(FieldPath.documentId(), Query.Direction.DESCENDING)
-            .get()
-            .addOnSuccessListener { result ->
-                listaProductos.clear() // Limpia la lista de productos antes de cargar los nuevos
-                for (document in result) {
-                    // Recupera los datos de cada documento y crea un objeto de productos
-                    val nombreProducto = document.getString("nombre")
-                    val precioProducto = document.getDouble("precio")
-                    val imagenProducto = document.getString("imagenUrl")
-                    val descripcionProducto = document.getString("descripcion")
-                    val supermercado = document.getString("supermecado")
-                    //Tenemos dos fechas para tratar los nulos
-                    val fechaCreacion = document.getTimestamp("fechaCreacion")
-                    val fecha = fechaCreacion ?: Timestamp.now()
-                    val usuario = emailUsuario
-
-                    val producto = Producto(
-                        nombreProducto!!,
-                        precioProducto!!.toDouble(),
-                        imagenProducto!!,
-                        descripcionProducto!!,
-                        supermercado!!,
-                        usuario,
-                        fecha!!
-                    )
-                    listaProductos.add(producto)
+                // Realizar la eliminación del producto
+                db.collection("usuarios").document(emailUsuario!!).collection("productos").document(productoId!!).
+                update(
+                "nombre", nuevoNombre,
+                "precio", nuevoPrecio,
+                "descripcion", nuevaDescripcion,
+                "supermecado", nuevoSupermercado
+                )
+                .addOnSuccessListener {
+                    Toast.makeText(this, "Producto actualizado correctamente", Toast.LENGTH_SHORT).show()
+                    finish()
                 }
-
-                // Notificar al adaptador del cambio en la lista de productos
-                miAdaptador2.notifyDataSetChanged()
-            }
-            .addOnFailureListener { exception ->
-                Log.e("EditarProductosActivity", "Error al obtener los productos del usuario: ", exception)
-            }
-    }
-
-
-    override fun onResume() {
-        super.onResume()
-        // Actualizar la lista de productos del usuario cuando se vuelva a la pantalla
-        obtenerProductosUsuario()
+                .addOnFailureListener { exception ->
+                    Toast.makeText(this, "Error al actualizar el producto: ${exception.message}", Toast.LENGTH_SHORT).show()
+                }
+        }
     }
 }

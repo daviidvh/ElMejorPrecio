@@ -9,5 +9,6 @@ data class Producto(
     val descripcionProducto: String = "",
     val supermercado: String = "",
     val usuario: String = "",
-    val fechaCreacion: Timestamp?
+    val fechaCreacion: Timestamp?,
+    val id:String
 )

@@ -32,7 +32,8 @@ class agregarProductos : AppCompatActivity() {
         }
 
         binding.btnSubir.setOnClickListener(){
-            if (!binding.txtNombre.text.isNullOrEmpty() && !binding.txtPrecio.text.isNullOrEmpty() && !binding.txtDescripcion.text.isNullOrEmpty() && !binding.txtSupermercado.text.isNullOrEmpty() && imagenUri != null) {
+            if (!binding.txtNombre.text.isNullOrEmpty() && !binding.txtPrecio.text.isNullOrEmpty() && !binding.txtDescripcion.text.isNullOrEmpty()
+                    && !binding.txtSupermercado.text.isNullOrEmpty() && imagenUri != null) {
                 // Creamos una referencia en Firebase Storage con el nombre de la imagen
                 val storageRef = FirebaseStorage.getInstance().reference.child("images/${imagenUri?.lastPathSegment}")
                 // Subimos la imagen a Firebase Storage y obtenemos su URL de descarga

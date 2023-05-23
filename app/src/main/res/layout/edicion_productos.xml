@@ -16,6 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/edtredondos"
+        android:backgroundTint="#5CE6C27A"
         android:orientation="horizontal"
         android:padding="16dp"
         tools:layout_editor_absoluteX="0dp">
@@ -71,19 +72,24 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="21dp"
+                android:layout_marginTop="5dp"
                 android:orientation="horizontal">
 
-                <ImageView
+                <Button
                     android:id="@+id/eliminar_button"
-                    android:layout_width="103dp"
+                    android:layout_width="21dp"
                     android:layout_height="match_parent"
-                    android:clickable="true"
+                    android:layout_marginRight="150dp"
+                    android:background="@drawable/eliminar"
+                    android:backgroundTint="#FF4949"
                     app:srcCompat="@drawable/eliminar" />
 
-                <ImageView
+                <Button
                     android:id="@+id/editar_button"
-                    android:layout_width="104dp"
+                    android:layout_width="21dp"
                     android:layout_height="match_parent"
+                    android:background="@drawable/editar"
+                    android:backgroundTint="#000000"
                     android:clickable="true"
                     app:srcCompat="@drawable/editar" />
             </LinearLayout>

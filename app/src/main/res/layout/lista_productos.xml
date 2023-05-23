@@ -15,6 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/edtredondos"
+        android:backgroundTint="#5CE6C27A"
         android:orientation="horizontal"
         android:padding="16dp">
 
@@ -40,7 +41,9 @@
                 android:id="@+id/txt_precio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textColor="#4CAF50"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/txt_descripcion"
@@ -58,7 +61,8 @@
                 android:id="@+id/txt_Usuario"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textStyle="italic" />
 
             <TextView
                 android:id="@+id/fechaCreacion"

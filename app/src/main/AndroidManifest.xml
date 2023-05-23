@@ -18,9 +18,13 @@
             android:exported="false"
             android:screenOrientation="portrait"/>
         <activity
+            android:name=".zonaUsuario"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".agregarProductos"
             android:exported="false"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".muestraProductos"
             android:exported="false"
