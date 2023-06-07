@@ -60,9 +60,9 @@ class zonaUsuario : AppCompatActivity() {
             swipeRefreshLayout.isRefreshing = false
         }
 
-        //Volver a la pantalla de inicio
-        binding.btnInicio.setOnClickListener(){
-            val intent = Intent(this, muestraProductos::class.java)
+        //Pantalla de usuario
+        binding.btnMicuenta.setOnClickListener(){
+            val intent = Intent(this, micuenta::class.java)
             startActivity(intent)
         }
 

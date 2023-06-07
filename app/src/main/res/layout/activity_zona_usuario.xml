@@ -28,15 +28,17 @@
                 android:textStyle="bold" />
 
             <Space
-                android:layout_width="0dp"
+                android:layout_width="21dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
 
             <Button
-                android:id="@+id/btnInicio"
+                android:id="@+id/btnMicuenta"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Inicio"
+                android:layout_weight="1"
+                android:background="@drawable/shapeboton"
+                android:text="Mi Cuenta"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
